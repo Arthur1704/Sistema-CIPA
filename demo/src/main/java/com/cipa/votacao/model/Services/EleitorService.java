@@ -1,5 +1,6 @@
 package com.cipa.votacao.model.Services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,15 @@ public class EleitorService {
         Eleitor eleitor2 = eleitorRepository.findById(eleitor.getId_eleitor())
                 .orElseThrow(() -> new RuntimeException("Candidato não existe."));
         eleitor2.setCpf(eleitor.getCpf());
-        eleitor2.setData_nasc(eleitor.getData_nasc());
+        eleitor2.setdataNasc(eleitor.getdataNasc());
         eleitor2.setSecretaria(eleitor.getSecretaria());
         eleitorRepository.save(eleitor2);
+    }
+
+    public boolean validateLogin(String cpf, LocalDate data) {
+        return eleitorRepository
+                .findByCpfAndDataNasc(cpf, data)
+                .isPresent();
     }
 
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIPA</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="formulario">
+        <form action="/login">
+            <h1>CIPA</h1><br>
+            <label for="cpf">CPF:</label>
+            <input type="text" name="cpf" id="cpf" maxlength="14" inputmode="numeric" pattern="\d{3}\.\d{3}-\d{2}" required>
+            <br>
+            <label for="data_nasc">Data Nacimento:</label>
+            <input type="date" name="data_nasc" id="data_nasc" required>
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+    <div class="descricao">
+
+        <h1>Gestão 2025-2026</h1>
+        <p>Eleiçoes CIPA 2026</p>
+        
+       <div class="logos-topo">
+            <img class="logo-pref" src="imagens/logopref.png" alt="Prefeitura">
+            <img class="logo-cipa" src="imagens/logocipa.png" alt="CIPA">
+        </div>
+        
+    </div>
+</body>
+</html>
+
+<script>
+    document.getElementById('cpf').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
+
+        v = v.replace(/^(\d{3})(\d)/, '$1.$2');
+        v = v.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+        v = v.replace(/\.(\d{3})(\d)/, '.$1-$2');
+
+        e.target.value = v;
+    });
+</script>

@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+}
+
+.formulario,
+.descricao {
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulario {
+    background-color: #f4f6f8;
+}
+
+.formulario form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.formulario h1 {
+    text-align: center;
+}
+
+.formulario input[type="text"],
+.formulario input[type="date"] {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.formulario input[type="submit"] {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0b2042;
+    color: white;
+    cursor: pointer;
+}
+
+.formulario input[type="submit"]:hover {
+    background-color: #123b78;
+}
+
+.descricao {
+    background-color: #0b2042;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.descricao h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+    margin-top: auto;
+}
+
+.descricao p {
+    font-size: 22px;
+    margin-bottom: 50px;
+}
+
+.logos-topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: baseline;
+    gap: 5px; /* espaço entre as duas */
+    margin-top: auto;
+    margin-bottom: 40px;
+}
+
+.logo-pref {
+    height: 12vh;        /* cresce/diminui com a tela */
+    max-height: 120px;  /* mas nunca passa disso */
+}
+
+.logo-cipa {
+    height: 14vh;
+    max-height: 150px;
+}
+
+@media (max-width: 900px) {
+    body {
+        flex-direction: column; /* empilha */
+        height: auto;
+    }
+
+    .formulario,
+    .descricao {
+        width: 100%;
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .formulario form {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .descricao h1 {
+        font-size: 28px;
+        margin-top: 0;
+    }
+
+    .descricao p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .logos-topo {
+        margin-top: 30px;
+        margin-bottom: 10px;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+}
+

@@ -11,7 +11,7 @@ import com.cipa.votacao.model.entidades.Voto;
 public interface VotoRepository extends JpaRepository<Voto, Long> {
 
     @Query("""
-            SELECT new com.cipa.votacao.model.dto.ResultadoVotoDTO(
+            SELECT new com.cipa.votacao.model.DTO.ResultadoVotoDTO(
                 v.candidato.nome,
                 COUNT(v)
             )

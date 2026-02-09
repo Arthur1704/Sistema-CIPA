@@ -26,8 +26,8 @@ public class Eleitor {
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(nullable = false)
-    private LocalDate data_nasc;
+    @Column(name = "data_nasc", nullable = false)
+    private LocalDate dataNasc;
 
     @Column(nullable = false)
     private String secretaria;
@@ -35,9 +35,9 @@ public class Eleitor {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean ja_votou = false;
 
-    public Eleitor(String cpf, LocalDate data_nasc, String secretaria) {
+    public Eleitor(String cpf, LocalDate dataNasc, String secretaria) {
         this.cpf = cpf;
-        this.data_nasc = data_nasc;
+        this.dataNasc = dataNasc;
         this.secretaria = secretaria;
     }
 
@@ -57,12 +57,12 @@ public class Eleitor {
         this.cpf = cpf;
     }
 
-    public LocalDate getData_nasc() {
-        return data_nasc;
+    public LocalDate getdataNasc() {
+        return dataNasc;
     }
 
-    public void setData_nasc(LocalDate data_nasc) {
-        this.data_nasc = data_nasc;
+    public void setdataNasc(LocalDate dataNasc) {
+        this.dataNasc = dataNasc;
     }
 
     public String getSecretaria() {
