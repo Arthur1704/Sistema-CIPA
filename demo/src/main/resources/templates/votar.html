@@ -30,8 +30,9 @@
                 <h5 class="card-title" th:text="${candidato.nome}">Nome Candidato</h5>
 
                 <p class="card-text">
-                    Candidato à CIPA. <br>
-                    CPF: <span th:text="${candidato.cpf}">000.000.000-00</span>
+                    CPF: <span th:text="${candidato.cpf}">000.000.000-00</span><br>
+                    Emprego: <span th:text="${candidato.cargo}">Cargo</span><br>
+                    Secretaria: <span th:text="${candidato.secretaria}">Secretaria</span>
                 </p>
 
                 <a th:href="@{/votar/{id}(id=${candidato.idCandidato})}" class="btn btn-primary">Votar</a>

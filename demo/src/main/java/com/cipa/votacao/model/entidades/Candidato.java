@@ -24,6 +24,12 @@ public class Candidato {
     @Column(nullable = false, unique = true)
     private String cpf;
 
+    @Column(nullable = false)
+    private String secretaria;
+
+    @Column(nullable = false)
+    private String cargo;
+
     @Lob // Indica que é um objeto grande (BLOB no banco)
     @Column(columnDefinition = "MEDIUMBLOB") // Garante que o Hibernate entenda o tipo específico
     private byte[] foto;
@@ -35,9 +41,27 @@ public class Candidato {
 
     }
 
-    public Candidato(String nome, String cpf) {
+    public Candidato(String nome, String cpf, String secretaria, String cargo) {
         this.nome = nome;
         this.cpf = cpf;
+        this.secretaria = secretaria;
+        this.cargo = cargo;
+    }
+
+    public String getSecretaria() {
+        return secretaria;
+    }
+
+    public void setSecretaria(String secretaria) {
+        this.secretaria = secretaria;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public Long getIdCandidato() {
@@ -72,8 +96,13 @@ public class Candidato {
         this.foto = foto;
     }
 
-    public String getFotoBase64() { return fotoBase64; }
-    public void setFotoBase64(String fotoBase64) { this.fotoBase64 = fotoBase64; }
+    public String getFotoBase64() {
+        return fotoBase64;
+    }
+
+    public void setFotoBase64(String fotoBase64) {
+        this.fotoBase64 = fotoBase64;
+    }
 
     @Override
     public int hashCode() {

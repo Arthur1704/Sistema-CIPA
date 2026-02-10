@@ -50,17 +50,17 @@ body {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #0b2042;
+    background-color: #198754;
     color: white;
     cursor: pointer;
 }
 
 .formulario input[type="submit"]:hover {
-    background-color: #123b78;
+    background-color:#198754;
 }
 
 .descricao {
-    background-color: #0b2042;
+    background-color:#198754;
     color: white;
     text-align: center;
     display: flex;

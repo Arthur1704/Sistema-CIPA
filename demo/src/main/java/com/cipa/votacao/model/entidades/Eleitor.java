@@ -35,6 +35,10 @@ public class Eleitor {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean ja_votou = false;
 
+    public Eleitor() {
+
+    }
+
     public Eleitor(String cpf, LocalDate dataNasc, String secretaria) {
         this.cpf = cpf;
         this.dataNasc = dataNasc;
