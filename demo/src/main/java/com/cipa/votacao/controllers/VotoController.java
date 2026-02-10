@@ -13,6 +13,7 @@ import com.cipa.votacao.model.Services.EleitorService;
 import com.cipa.votacao.model.Services.VotoService;
 import com.cipa.votacao.model.entidades.Eleitor;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,11 +29,34 @@ public class VotoController {
     public EleitorService eleitorService;
 
     @GetMapping("/votacao")
-    public ModelAndView viewVotos() {
+    public ModelAndView viewVotos(HttpSession session, HttpServletResponse response) {
+
+        // Força o navegador a não salvar a página em cache
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setHeader("Expires", "0"); // Proxies
+
+        Long idEleitor = (Long) session.getAttribute("usuarioLogadoId");
+
+        if (idEleitor == null)
+            return new ModelAndView("redirect:/");
+
+        Eleitor eleitor = eleitorService.findById(idEleitor);
+
+        if (eleitor.getJa_votou()) {
+            ModelAndView mv = new ModelAndView("redirect:/resultado");
+            mv.addObject("error", "Você já realizou seu voto!");
+            return mv;
+        }
+
         ModelAndView mv = new ModelAndView("votar");
         mv.addObject("votoDTO", new VotoDTO());
 
-        var candidatos = candidatoService.findAll();
+        var candidatos = candidatoService.findAll().stream()
+                .filter(c -> c.getIdCandidato() != 7 && c.getIdCandidato() != 8)
+                .toList();
+        // ------------------------------
+
         candidatos.forEach(c -> {
             if (c.getFoto() != null && c.getFoto().length > 0) {
                 String base64 = java.util.Base64.getEncoder().encodeToString(c.getFoto());
@@ -51,7 +75,7 @@ public class VotoController {
         Long idEleitor = (Long) session.getAttribute("usuarioLogadoId");
 
         if (idEleitor == null) {
-            return new ModelAndView("redirect:/"); // Volta para o login se a sessão expirou
+            return new ModelAndView("redirect:/");
         }
 
         Eleitor eleitor = eleitorService.findById(idEleitor);
@@ -72,9 +96,38 @@ public class VotoController {
 
     @GetMapping("/resultado")
     public ModelAndView resultado() {
-        ModelAndView mv = new ModelAndView("resultado");
-        mv.addObject("ranking", votoService.contarVotosPorCandidato());
-        return mv;
-    }
 
+        /*
+         * ModelAndView mv = new ModelAndView("resultado");
+         * List<ResultadoVotoDTO> rankingCompleto =
+         * votoService.contarVotosPorCandidato();
+         * 
+         * long totalBrancos = rankingCompleto.stream().filter(r ->
+         * r.getNome().equalsIgnoreCase("VOTO EM BRANCO"))
+         * .mapToLong(ResultadoVotoDTO::getTotal).sum();
+         * 
+         * long totalNulos = rankingCompleto.stream().filter(r ->
+         * r.getNome().equalsIgnoreCase("VOTO NULO"))
+         * .mapToLong(ResultadoVotoDTO::getTotal).sum();
+         * 
+         * List<ResultadoVotoDTO> candidatosReais = rankingCompleto.stream().filter(
+         * r -> !r.getNome().equalsIgnoreCase("VOTO EM BRANCO") &&
+         * !r.getNome().equalsIgnoreCase("VOTO NULO"))
+         * .toList();
+         * 
+         * // Calcula o total no Java
+         * long totalVotos = rankingCompleto.stream()
+         * .mapToLong(ResultadoVotoDTO::getTotal)
+         * .sum();
+         * 
+         * mv.addObject("ranking", candidatosReais);
+         * mv.addObject("totalVotos", totalVotos);
+         * mv.addObject("qtdBrancos", totalBrancos); // Vai para o card separado
+         * mv.addObject("qtdNulos", totalNulos);
+         * 
+         * return mv;
+         */
+
+        return new ModelAndView("agradecimento");
+    }
 }

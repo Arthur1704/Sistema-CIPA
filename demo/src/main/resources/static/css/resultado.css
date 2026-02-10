@@ -1,0 +1,64 @@
+:root {
+    --verde-cipa: #198754;
+    --verde-escuro: #0f5132;
+}
+
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.header-resultado {
+    background-color: var(--verde-cipa);
+    color: white;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header-resultado h1 {
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.card-total {
+    border: none;
+    border-left: 6px solid var(--verde-cipa);
+    transition: transform 0.3s ease;
+}
+
+.card-total:hover {
+    transform: translateY(-5px);
+}
+
+.table thead th {
+    border-top: none;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.progress {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 1s ease-in-out;
+}
+
+.badge {
+    min-width: 45px;
+}
+
+@media (max-width: 768px) {
+    .header-resultado {
+        padding: 1.5rem 0;
+    }
+    
+    .header-resultado h1 {
+        font-size: 1.8rem;
+    }
+}

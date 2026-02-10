@@ -1,3 +1,12 @@
+/* Configurações Globais */
+:root {
+    --verde-cipa: #198754;
+    --verde-escuro: #146c43;
+    --cinza-claro: #f4f6f8;
+    --branco: #ffffff;
+    --sombra: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +17,11 @@
 body {
     height: 100vh;
     display: flex;
+    overflow: hidden;
+    /* Evita scrolls desnecessários na tela cheia */
 }
 
+/* Divisão da Tela (50% cada) */
 .formulario,
 .descricao {
     width: 50%;
@@ -19,59 +31,108 @@ body {
     justify-content: center;
 }
 
+/* Lado Esquerdo: Formulário */
 .formulario {
-    background-color: #f4f6f8;
+    background-color: var(--cinza-claro);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 }
 
 .formulario form {
-    background: #fff;
+    background: var(--branco);
     padding: 40px;
     border-radius: 10px;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    gap: 15px;
+    box-shadow: var(--sombra);
 }
 
 .formulario h1 {
     text-align: center;
+    margin-bottom: 10px;
+    color: #333;
 }
 
-.formulario input[type="text"],
-.formulario input[type="date"] {
+.formulario label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: -5px;
+}
+
+.formulario input[type="text"] {
     padding: 12px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+    outline-color: var(--verde-cipa);
 }
 
+/* Botão de Enviar (Entrar) */
 .formulario input[type="submit"] {
     margin-top: 10px;
-    padding: 10px;
+    padding: 12px;
     border: none;
     border-radius: 5px;
-    background-color: #198754;
+    background-color: var(--verde-cipa);
     color: white;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    transition: background 0.2s ease-in-out;
 }
 
 .formulario input[type="submit"]:hover {
-    background-color:#198754;
+    background-color: var(--verde-escuro);
 }
 
+/* Botão de Apuração (Abaixo do Form) */
+.btn_apuracao {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: transparent;
+    color: var(--verde-cipa);
+    border: 2px solid var(--verde-cipa);
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn_apuracao:hover {
+    background-color: var(--verde-cipa);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Lado Direito: Descrição Verde */
 .descricao {
-    background-color:#198754;
+    background-color: var(--verde-cipa);
     color: white;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    padding: 40px;
 }
 
 .descricao h1 {
     font-size: 40px;
     margin-bottom: 10px;
     margin-top: auto;
+    /* Empurra para o centro */
 }
 
 .descricao p {
@@ -79,41 +140,48 @@ body {
     margin-bottom: 50px;
 }
 
+/* Logos no Rodapé do Lado Verde */
 .logos-topo {
     display: flex;
-    align-items: baseline;
-    justify-content: baseline;
-    gap: 5px; /* espaço entre as duas */
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
     margin-top: auto;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .logo-pref {
-    height: 12vh;        /* cresce/diminui com a tela */
-    max-height: 120px;  /* mas nunca passa disso */
+    height: 80px;
+    width: auto;
 }
 
 .logo-cipa {
-    height: 14vh;
-    max-height: 150px;
+    height: 100px;
+    width: auto;
 }
 
+/* Responsividade (Celulares e Tablets) */
 @media (max-width: 900px) {
     body {
-        flex-direction: column; /* empilha */
+        flex-direction: column;
         height: auto;
+        overflow-y: auto;
     }
 
     .formulario,
     .descricao {
         width: 100%;
         height: auto;
-        padding: 40px 20px;
     }
 
-    .formulario form {
-        width: 100%;
-        max-width: 400px;
+    .formulario {
+        padding: 60px 20px;
+        order: 1;
+    }
+
+    .descricao {
+        padding: 40px 20px;
+        order: 2;
     }
 
     .descricao h1 {
@@ -121,16 +189,41 @@ body {
         margin-top: 0;
     }
 
-    .descricao p {
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-
     .logos-topo {
         margin-top: 30px;
-        margin-bottom: 10px;
-        gap: 20px;
-        flex-wrap: wrap;
     }
 }
 
+.logo-pref,
+.logo-cipa {
+    height: 70px;
+    width: auto;
+}
+
+.btn_apuracao {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    /* Ou a mesma largura dos seus inputs */
+    margin-top: 15px;
+    padding: 12px;
+
+    background-color: transparent;
+    color: var(--verde-cipa);
+    border: 2px solid var(--verde-cipa);
+
+    text-align: center;
+    text-decoration: none;
+    /* Remove o sublinhado do link */
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn_apuracao:hover {
+    background-color: #198754;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

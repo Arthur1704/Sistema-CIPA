@@ -116,3 +116,69 @@ header {
         grid-template-columns: 1fr;
     }
 }
+
+.secao-votos-especiais {
+    padding: 40px 20px;
+    border-top: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.btn-urna-flex {
+    border-radius: 5px;
+    padding: 15px 40px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    border: 2px solid transparent;
+}
+
+/* Botão Branco: Fundo branco com borda cinza */
+.btn-branco {
+    background-color: #ffffff;
+    color: #333;
+    border-color: #ccc;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-branco:hover {
+    background-color: #eee;
+    transform: translateY(-2px);
+}
+
+/* Botão Nulo: Fundo escuro/preto */
+.btn-nulo {
+    background-color: #343a40;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-nulo:hover {
+    background-color: #212529;
+    transform: translateY(-2px);
+}
+
+/* Responsividade para celulares */
+@media (max-width: 576px) {
+    .secao-votos-especiais .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn-urna-flex {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+.badge-votos-fix {
+            background-color: #198754;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: inline-block;
+        }

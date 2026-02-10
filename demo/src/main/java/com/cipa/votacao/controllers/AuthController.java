@@ -3,6 +3,7 @@ package com.cipa.votacao.controllers;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ModelAndView logar(@RequestParam String cpf, @RequestParam LocalDate data, HttpSession session) {
+    public ModelAndView logar(@RequestParam String cpf,
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate data, HttpSession session) {
         if (login.validateLogin(cpf, data)) {
             var eleitor = login.findByCpf(cpf);
             if (eleitor.getJa_votou()) {

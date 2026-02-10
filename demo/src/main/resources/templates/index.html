@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIPA</title>
     <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" type="image/png" th:href="@{/imagens/favicon.png}">
 </head>
 
 <body>
@@ -13,15 +14,18 @@
         <form action="/login" method="post">
             <h1>CIPA</h1><br>
             <label for="cpf">CPF:</label>
-            <input type="text" name="cpf" id="cpf" maxlength="14" inputmode="numeric"
-                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required>
+            <input type="text" name="cpf" id="cpf" maxlength="14" required>
 
             <br>
-            <label for="data_nasc">Data Nacimento:</label>
-            <input type="date" name="data" id="data_nasc" required>
+            <label for="data_nasc">Data Nascimento:</label>
+            <input type="text" name="data" id="data_nasc" placeholder="00/00/0000" maxlength="10" required>
+
             <br>
-            <input type="submit">
+            <input type="submit" value="Entrar">
         </form>
+        <!--
+        <a href="/resultado" class="btn_apuracao">Ver Apuração de Votos</a>
+        -->
     </div>
 
     <div class="descricao">
@@ -41,11 +45,24 @@
 
 <script>
     document.getElementById('cpf').addEventListener('input', function (e) {
-        let v = e.target.value.replace(/\D/g, ''); // remove tudo que não é número
+        let v = e.target.value.replace(/\D/g, '');
 
         v = v.replace(/^(\d{3})(\d)/, '$1.$2');
         v = v.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
         v = v.replace(/\.(\d{3})(\d)/, '.$1-$2');
+
+        e.target.value = v;
+    });
+
+    document.getElementById('data_nasc').addEventListener('input', function (e) {
+        let v = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+
+        // Aplica a máscara dd/mm/yyyy
+        if (v.length > 2 && v.length <= 4) {
+            v = v.replace(/^(\d{2})(\d)/, '$1/$2');
+        } else if (v.length > 4) {
+            v = v.replace(/^(\d{2})(\d{2})(\d)/, '$1/$2/$3');
+        }
 
         e.target.value = v;
     });
