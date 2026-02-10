@@ -77,7 +77,7 @@ public class Eleitor {
         this.secretaria = secretaria;
     }
 
-    public boolean isJa_votou() {
+    public boolean getJa_votou() {
         return ja_votou;
     }
 

@@ -9,7 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cipa.votacao.model.DTO.VotoDTO;
 import com.cipa.votacao.model.Services.CandidatoService;
+import com.cipa.votacao.model.Services.EleitorService;
 import com.cipa.votacao.model.Services.VotoService;
+import com.cipa.votacao.model.entidades.Eleitor;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class VotoController {
@@ -19,6 +23,9 @@ public class VotoController {
 
     @Autowired
     public CandidatoService candidatoService;
+
+    @Autowired
+    public EleitorService eleitorService;
 
     @GetMapping("/votacao")
     public ModelAndView viewVotos() {
@@ -39,14 +46,33 @@ public class VotoController {
     }
 
     @PostMapping("/votar")
-    public ModelAndView votar(@ModelAttribute("votoDTO") VotoDTO votoDTO) {
+    public ModelAndView votar(@ModelAttribute("votoDTO") VotoDTO votoDTO, HttpSession session) {
+
+        Long idEleitor = (Long) session.getAttribute("usuarioLogadoId");
+
+        if (idEleitor == null) {
+            return new ModelAndView("redirect:/"); // Volta para o login se a sessão expirou
+        }
+
+        Eleitor eleitor = eleitorService.findById(idEleitor);
+
+        if (eleitor.getJa_votou()) {
+            ModelAndView mv = new ModelAndView("redirect:/resultado");
+            mv.addObject("error", "Você já realizou seu voto!");
+            return mv;
+        }
+
+        eleitor.setJa_votou(true);
+        eleitorService.update(eleitor);
+
         votoService.votar(votoDTO);
+
         return new ModelAndView("redirect:/resultado");
     }
 
     @GetMapping("/resultado")
     public ModelAndView resultado() {
-        ModelAndView mv = new ModelAndView("resultado-votacao");
+        ModelAndView mv = new ModelAndView("resultado");
         mv.addObject("ranking", votoService.contarVotosPorCandidato());
         return mv;
     }

@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cipa.votacao.model.Services.CandidatoService;
 import com.cipa.votacao.model.Services.EleitorService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AuthController {
 
@@ -27,8 +29,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ModelAndView logar(@RequestParam String cpf, @RequestParam LocalDate data) {
+    public ModelAndView logar(@RequestParam String cpf, @RequestParam LocalDate data, HttpSession session) {
         if (login.validateLogin(cpf, data)) {
+            var eleitor = login.findByCpf(cpf);
+            if (eleitor.getJa_votou()) {
+                return new ModelAndView("redirect:/resultado");
+            }
+            session.setAttribute("usuarioLogadoId", eleitor.getId_eleitor());
             ModelAndView mv = new ModelAndView("redirect:/votacao");
             mv.addObject("candidatos", candidatoService.findAll());
             return mv;

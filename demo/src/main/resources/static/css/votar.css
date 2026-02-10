@@ -7,54 +7,55 @@
 body {
     background-color: #f4f4f4;
     font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 header {
     background-color: var(--verde-cipa);
     color: white;
-    padding: 2rem 0;
-    margin-bottom: 3rem;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Grid com largura intermediária de 380px */
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 35px;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr; 
+    gap: 15px;
     padding: 0 30px;
-    max-width: 1800px;
+    max-width: 98%; 
     margin: 0 auto;
-    align-items: stretch; 
+    align-items: stretch;
 }
 
 .card {
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
     background: #ffffff;
     box-shadow: var(--sombra-suave);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: 100%; 
+    height: 100%;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
 }
 
-/* Imagem levemente maior e mais alta */
 .card-img-top {
-    height: 350px;
+    height: 220px;
+    width: 100%;
     object-fit: cover;
     object-position: center;
 }
 
 .card-body {
-    padding: 2rem;
+    padding: 1rem;
     text-align: center;
     flex: 1;
     display: flex;
@@ -63,30 +64,55 @@ header {
 
 .card-title {
     color: var(--verde-escuro);
-    font-size: 1.6rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    white-space: normal;      /* Permite quebra de linha */
+    word-wrap: break-word;    /* Força quebra de palavras muito longas */
+    line-height: 1.2;         /* Melhora o espaçamento entre linhas do nome */
+    min-height: 2.4em;        /* Reserva espaço para 2 linhas (mantém alinhamento) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-text {
     color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
     flex-grow: 1;
+}
+
+.card-body form {
+    margin-top: auto; /* Empurra o botão sempre para o rodapé do card */
 }
 
 .btn-primary {
     background-color: var(--verde-cipa);
+    color: white;
     border: none;
-    padding: 14px;
-    font-size: 1.1rem;
+    padding: 10px;
+    font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 10px;
+    border-radius: 8px;
     width: 100%;
+    cursor: pointer;
     transition: background 0.2s;
-    margin-top: auto;
 }
 
 .btn-primary:hover {
     background-color: var(--verde-escuro);
+}
+
+@media (max-width: 800px) {
+    .cards {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
 }

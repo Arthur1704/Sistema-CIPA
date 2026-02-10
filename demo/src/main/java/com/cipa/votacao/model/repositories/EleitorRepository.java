@@ -9,6 +9,8 @@ import com.cipa.votacao.model.entidades.Eleitor;
 
 public interface EleitorRepository extends JpaRepository<Eleitor, Long> {
 
+    Optional<Eleitor> findByCpf(String cpf);
+
     Optional<Eleitor> findByCpfAndDataNasc(String cpf, LocalDate data_nasc);
 
 }

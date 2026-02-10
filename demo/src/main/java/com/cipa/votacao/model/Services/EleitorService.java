@@ -49,6 +49,7 @@ public class EleitorService {
                 .orElseThrow(() -> new RuntimeException("Candidato não existe."));
         eleitor2.setCpf(eleitor.getCpf());
         eleitor2.setdataNasc(eleitor.getdataNasc());
+        eleitor2.setJa_votou(eleitor.getJa_votou());
         eleitor2.setSecretaria(eleitor.getSecretaria());
         eleitorRepository.save(eleitor2);
     }
@@ -57,6 +58,11 @@ public class EleitorService {
         return eleitorRepository
                 .findByCpfAndDataNasc(cpf, data)
                 .isPresent();
+    }
+
+    public Eleitor findByCpf(String cpf) {
+        return eleitorRepository.findByCpf(cpf)
+                .orElseThrow(() -> new RuntimeException("Eleitor com CPF " + cpf + " não encontrado."));
     }
 
 }

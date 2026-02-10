@@ -35,7 +35,10 @@
                     Secretaria: <span th:text="${candidato.secretaria}">Secretaria</span>
                 </p>
 
-                <a th:href="@{/votar/{id}(id=${candidato.idCandidato})}" class="btn btn-primary">Votar</a>
+                <form th:action="@{/votar}" method="post">
+                    <input type="hidden" name="idCandidato" th:value="${candidato.idCandidato}" />
+                    <button type="submit" class="btn btn-primary">Votar</button>
+                </form>
             </div>
         </div>
     </div>
