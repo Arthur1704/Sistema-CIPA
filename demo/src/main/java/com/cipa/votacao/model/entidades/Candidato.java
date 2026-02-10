@@ -5,7 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "candidato")
@@ -13,13 +15,21 @@ public class Candidato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_candidato;
+    @Column(name = "id_candidato")
+    private Long idCandidato;
 
     @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false, unique = true)
     private String cpf;
+
+    @Lob // Indica que é um objeto grande (BLOB no banco)
+    @Column(columnDefinition = "MEDIUMBLOB") // Garante que o Hibernate entenda o tipo específico
+    private byte[] foto;
+
+    @Transient
+    private String fotoBase64;
 
     public Candidato() {
 
@@ -30,12 +40,12 @@ public class Candidato {
         this.cpf = cpf;
     }
 
-    public Long getId_candidato() {
-        return id_candidato;
+    public Long getIdCandidato() {
+        return idCandidato;
     }
 
-    public void setId_candidato(Long id_candidato) {
-        this.id_candidato = id_candidato;
+    public void setIdCandidato(Long idCandidato) {
+        this.idCandidato = idCandidato;
     }
 
     public String getNome() {
@@ -54,11 +64,22 @@ public class Candidato {
         this.cpf = cpf;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public String getFotoBase64() { return fotoBase64; }
+    public void setFotoBase64(String fotoBase64) { this.fotoBase64 = fotoBase64; }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id_candidato == null) ? 0 : id_candidato.hashCode());
+        result = prime * result + ((idCandidato == null) ? 0 : idCandidato.hashCode());
         return result;
     }
 
@@ -71,10 +92,10 @@ public class Candidato {
         if (getClass() != obj.getClass())
             return false;
         Candidato other = (Candidato) obj;
-        if (id_candidato == null) {
-            if (other.id_candidato != null)
+        if (idCandidato == null) {
+            if (other.idCandidato != null)
                 return false;
-        } else if (!id_candidato.equals(other.id_candidato))
+        } else if (!idCandidato.equals(other.idCandidato))
             return false;
         return true;
     }

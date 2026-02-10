@@ -49,7 +49,7 @@ public class CandidatoService {
 
     @Transactional
     public void update(Candidato candidato) {
-        Candidato candidato2 = candidatoRepository.findById(candidato.getId_candidato())
+        Candidato candidato2 = candidatoRepository.findById(candidato.getIdCandidato())
                 .orElseThrow(() -> new RuntimeException("Candidato não existe."));
         candidato2.setCpf(candidato.getCpf());
         candidato2.setNome(candidato.getNome());

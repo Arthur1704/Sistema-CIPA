@@ -24,7 +24,16 @@ public class VotoController {
     public ModelAndView viewVotos() {
         ModelAndView mv = new ModelAndView("votar");
         mv.addObject("votoDTO", new VotoDTO());
-        mv.addObject("candidatos", candidatoService.findAll());
+
+        var candidatos = candidatoService.findAll();
+        candidatos.forEach(c -> {
+            if (c.getFoto() != null && c.getFoto().length > 0) {
+                String base64 = java.util.Base64.getEncoder().encodeToString(c.getFoto());
+                c.setFotoBase64(base64);
+            }
+        });
+
+        mv.addObject("candidatos", candidatos);
         mv.addObject("votos", votoService.contarVotosPorCandidato());
         return mv;
     }
