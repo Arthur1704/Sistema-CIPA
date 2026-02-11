@@ -1,5 +1,7 @@
 package com.cipa.votacao.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cipa.votacao.model.DTO.ResultadoVotoDTO;
 import com.cipa.votacao.model.DTO.VotoDTO;
 import com.cipa.votacao.model.Services.CandidatoService;
 import com.cipa.votacao.model.Services.EleitorService;
@@ -129,5 +132,35 @@ public class VotoController {
          */
 
         return new ModelAndView("agradecimento");
+    }
+
+    @GetMapping("/final")
+    public ModelAndView viewFinal() {
+        ModelAndView mv = new ModelAndView("resultado");
+        List<ResultadoVotoDTO> rankingCompleto = votoService.contarVotosPorCandidato();
+
+        long totalBrancos = rankingCompleto.stream().filter(r -> r.getNome().equalsIgnoreCase("VOTO EM BRANCO"))
+                .mapToLong(ResultadoVotoDTO::getTotal).sum();
+
+        long totalNulos = rankingCompleto.stream().filter(r -> r.getNome().equalsIgnoreCase("VOTO NULO"))
+                .mapToLong(ResultadoVotoDTO::getTotal).sum();
+
+        List<ResultadoVotoDTO> candidatosReais = rankingCompleto.stream().filter(
+                r -> !r.getNome().equalsIgnoreCase("VOTO EM BRANCO") &&
+                        !r.getNome().equalsIgnoreCase("VOTO NULO"))
+                .toList();
+
+        // Calcula o total no Java
+        long totalVotos = rankingCompleto.stream()
+                .mapToLong(ResultadoVotoDTO::getTotal)
+                .sum();
+
+        mv.addObject("ranking", candidatosReais);
+        mv.addObject("totalVotos", totalVotos);
+        mv.addObject("qtdBrancos", totalBrancos); // Vai para o card separado
+        mv.addObject("qtdNulos", totalNulos);
+
+        return mv;
+
     }
 }
